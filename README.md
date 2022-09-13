@@ -1,6 +1,6 @@
 # Firebase Example
 
-https://alirezabandegi.github.io/firebase/
+https://alirezabandegi.github.io/Firebase/
 
 ### Development
 
