@@ -1,4 +1,9 @@
 import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import Stack from '@mui/material/Stack';
+import { styled } from '@mui/material/styles';
+import styles from "/style.css";
 
 const dateTimeFormat = new Intl.DateTimeFormat("en-GB", {
   hour: "numeric",
@@ -40,18 +45,33 @@ function stringAvatar(name) {
 export default function Message({ createdAt, text, displayName }) {
   return (
     <div>
+
+      <Box sx={{ 
+                width: '80%', 
+                height: '60px', 
+                backgroundColor: 'primary.dark', 
+                marginBottom:'5px', 
+                paddingTop:2,
+                '&:hover': {
+                backgroundColor: 'primary.main',
+                opacity: [0.9, 0.8, 0.7],}
+              }}>
+
       [
       {createdAt?.seconds ? (
         <span>{dateTimeFormat.format(new Date(createdAt.seconds * 1000))}</span>
       ) : null}
       ]{" "}
       
-      <Avatar {...stringAvatar('a c')} />
-      
+      {displayName ? <Avatar {...stringAvatar(displayName + " .")} sx={{display:'inline', marginRight:1}}/> : null}
       <strong>
         {displayName ? displayName : null}
       </strong>{" "}
-      {text}
+        {text}
+      
+
+      </Box>
+
     </div>
   );
 }
