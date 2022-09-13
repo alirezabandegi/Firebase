@@ -7,5 +7,6 @@ export default function Messages({ messages }) {
         <Message key={message.id} {...message} />
       ))}
     </pre>
+    
   );
 }
