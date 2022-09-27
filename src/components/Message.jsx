@@ -48,7 +48,7 @@ export default function Message({ createdAt, text, displayName }) {
       <Box sx={{ 
                 width: '80%', 
                 height: '60px', 
-                backgroundColor: 'primary.dark', 
+                backgroundColor: 'red', 
                 marginBottom:'5px', 
                 paddingTop:2,
                 '&:hover': {
