@@ -1,8 +1,10 @@
+import { useRadioGroup } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
+import { doc, deleteDoc } from "firebase/firestore";
+import { useFirestore, useUser } from 'reactfire';
 import Stack from '@mui/material/Stack';
-import { styled } from '@mui/material/styles';
+import Button from '@mui/material/Button';
 
 const dateTimeFormat = new Intl.DateTimeFormat("en-GB", {
   hour: "numeric",
@@ -41,19 +43,25 @@ function stringAvatar(name) {
 }
 
 
-export default function Message({ createdAt, text, displayName }) {
+export default function Message({ createdAt, text, displayName, id, uid }) {
+  const firestore = useFirestore();
+  const { data: user } = useUser();
+
   return (
     <div>
 
+      <Stack spacing={2} direction="row">
       <Box sx={{ 
-                width: '80%', 
-                height: '60px', 
+                width: '80%',
+                padding: 1,
                 backgroundColor: 'red', 
                 marginBottom:'5px', 
                 paddingTop:2,
                 '&:hover': {
                 backgroundColor: 'primary.main',
-                opacity: [0.9, 0.8, 0.7],}
+                opacity: [0.9, 0.8, 0.7],
+                },
+                wordWrap: 'break-word'
               }}>
 
       [
@@ -63,13 +71,20 @@ export default function Message({ createdAt, text, displayName }) {
       ]{" "}
       
       {displayName ? <Avatar {...stringAvatar(displayName + " .")} sx={{display:'inline', marginRight:1}}/> : null}
+      
       <strong>
         {displayName ? displayName : null}
       </strong>{" "}
         {text}
+      </Box>
+      {uid === user.uid && <Button sx={{height:40}} variant="outlined" onClick={async () => {
+        const docRef = doc(firestore, 'messages', id);
+        await deleteDoc(docRef);
+      }}>Delete message</Button>}
+      
+    </Stack>
       
 
-      </Box>
 
     </div>
   );
